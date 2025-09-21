@@ -21,6 +21,10 @@ class Command(BaseCommand):
         interval = options['interval']
         self.stdout.write(f'Starting periodic scraping every {interval} seconds...')
 
+        # Wait for the first interval before starting the loop to avoid slowing down app startup
+        self.stdout.write(f'Waiting {interval} seconds before first scraping cycle...')
+        time.sleep(interval)
+
         while True:
             try:
                 self.stdout.write(f'[{datetime.now()}] Starting scraping cycle...')
